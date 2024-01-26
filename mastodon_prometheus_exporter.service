@@ -1,0 +1,27 @@
+[Unit]
+Description=mastodon_prometheus_exporter
+ConditionPathExists=/usr/local/bin/mastodon_prometheus_exporter
+After=network.target
+ 
+[Service]
+Type=simple
+User=mastodon_exporter
+Group=mastodon_exporter
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+WorkingDirectory=/tmp
+ExecStart=/usr/local/bin/mastodon_prometheus_exporter
+
+PermissionsStartOnly=true
+SyslogIdentifier=mastodon_prometheus_exporter
+
+# Change env vars bellow :
+Environment="MASTODON_INSTANCE=https://mastodon.social"
+Environment="EXPORTER_PORT=8080"
+ 
+[Install]
+WantedBy=multi-user.target

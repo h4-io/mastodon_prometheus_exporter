@@ -1,0 +1,18 @@
+name: Build on tag
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build
+        run: go build
