@@ -1,6 +1,7 @@
 # mastodon_prometheus_exporter
 
 ![Github License](https://img.shields.io/badge/license-APACHE2.0-green)
+[![CodeFactor](https://www.codefactor.io/repository/github/h4-io/mastodon_prometheus_exporter/badge)](https://www.codefactor.io/repository/github/h4-io/mastodon_prometheus_exporter)
 
 #### mastodon_prometheus_exporter is a free and opensource simple exporter for mastodon business metrics
 
