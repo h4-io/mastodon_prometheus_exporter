@@ -13,9 +13,9 @@ jobs:
         arch: [amd64, arm64, ppc64le]
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - name: Build and publish for ${{ matrix.arch }}
@@ -24,7 +24,7 @@ jobs:
           # Add steps to publish the artifact
           echo "Publishing artifact for ${{ matrix.arch }}"
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: mastodon_prometheus_exporter_${{ matrix.arch }}
           path: mastodon_prometheus_exporter_${{ matrix.arch }}
