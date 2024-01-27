@@ -1,6 +1,6 @@
 module mastodon_prometheus_exporter
 
-go 1.21.6
+go 1.21
 
 require github.com/VictoriaMetrics/metrics v1.31.0
 
