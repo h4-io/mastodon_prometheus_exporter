@@ -7,19 +7,27 @@ on:
     types: 
         - created
 
-# workflow tasks
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  generate:
-    name: Generate cross-platform builds
+  # The "build" workflow
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
-      - name: Generate build files
-        uses: thatisuday/go-cross-build@v1
-        with:
-            platforms: 'linux/amd64, darwin/amd64, windows/amd64'
-            package: ''
-            name: 'mastodon_prometheus_exporter'
-            compress: 'true'
-            dest: 'dist'
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    
+    # Setup Go
+    - name: Setup Go
+      uses: actions/setup-go@v2
+   
+    # Install all the dependencies
+    - name: Install dependencies
+      run: |
+        go version
+        
+    # Run build of the application
+    - name: Run build
+      run: go build . 
