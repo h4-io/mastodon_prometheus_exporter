@@ -1,18 +1,25 @@
-name: Build on tag
-on:
-  push:
-    tags:
-      - 'v*.*.*'
+# workflow name
+name: Generate release-artifacts
 
+# on events
+on:
+  release:
+    types: 
+        - created
+
+# workflow tasks
 jobs:
-  build:
+  generate:
+    name: Generate cross-platform builds
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.21
-      - name: Checkout code
+      - name: Checkout the repository
         uses: actions/checkout@v2
-      - name: Build
-        run: go build
+      - name: Generate build files
+        uses: thatisuday/go-cross-build@v1
+        with:
+            platforms: 'linux/amd64, darwin/amd64, windows/amd64'
+            package: 'mastodon_prometheus_exporter'
+            name: 'mastodon_prometheus_exporter'
+            compress: 'true'
+            dest: 'dist'
