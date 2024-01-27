@@ -1,33 +1,30 @@
-# workflow name
-name: Generate release-artifacts
+name: Multi-arch release
 
-# on events
 on:
   release:
-    types: 
-        - created
+    types: [created]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # The "build" workflow
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        go-version: [1.21]
+        arch: [amd64, arm64, ppc64le]
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    
-    # Setup Go
-    - name: Setup Go
-      uses: actions/setup-go@v2
-   
-    # Install all the dependencies
-    - name: Install dependencies
-      run: |
-        go version
-        
-    # Run build of the application
-    - name: Run build
-      run: go build . 
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Build and publish for ${{ matrix.arch }}
+        run: |
+          env GOARCH=${{ matrix.arch }} go build -o  mastodon_prometheus_exporter_${{ matrix.arch }}
+          # Add steps to publish the artifact
+          echo "Publishing artifact for ${{ matrix.arch }}"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mastodon_prometheus_exporter_${{ matrix.arch }}
+          path: mastodon_prometheus_exporter_${{ matrix.arch }}
