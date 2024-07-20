@@ -2,7 +2,7 @@ module mastodon_prometheus_exporter
 
 go 1.21
 
-require github.com/VictoriaMetrics/metrics v1.33.1
+require github.com/VictoriaMetrics/metrics v1.35.0
 
 require (
 	github.com/valyala/fastrand v1.1.0 // indirect
